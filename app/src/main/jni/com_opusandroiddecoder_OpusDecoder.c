@@ -3,12 +3,10 @@
 //
 
 #include "com_opusandroiddecoder_OpusDecoder.h"
-#include <string.h>
-#include <android/log.h>
-#include "libopus.a"
+#include "string.h"
+#include "android/log.h"
 #include "stdio.h"
-#include "include/opus/opus_types.h"
-#include "include/opus/opus_defines.h" #include "include/opus/opus.h"
+#include <opus/opus.h>
 
 //Fields
 char logMsg[255];
