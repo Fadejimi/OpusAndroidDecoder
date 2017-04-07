@@ -35,11 +35,7 @@ public class OpusDecoder extends FilterInputStream {
         }
     }
 
-    /**
-     * Default constructor with 8khz sampling rate, mono channel and 20ms frames
-     *
-     * @param out InputStream to write to
-     */
+
     protected OpusDecoder( InputStream in )
     {
         this(in, 16000, 1, 960);
