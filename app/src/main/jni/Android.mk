@@ -1,16 +1,16 @@
 LOCAL_PATH := $(call my-dir)
 
-# static library info
-LOCAL_MODULE := libYourLibrary
-LOCAL_SRC_FILES := ../libs/lib/libopus.a
-LOCAL_EXPORT_C_INCLUDES := ../lib/include
-include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := libopus
+LOCAL_SRC_FILES := lib/libopus.a
+include $(PREBUILD_STATIC_LIBRARY)
 
 # wrapper info
 include $(CLEAR_VARS)
-LOCAL_C_INCLUDES += ../libs/opus/include
 LOCAL_MODULE    := OpusDecoder.c
 LOCAL_SRC_FILES := com_opusandroiddecoder_OpusDecoder.c
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include/opus
 
-LOCAL_STATIC_LIBRARIES := opus
+LOCAL_LDLIBS   = -lz -lm
+LOCAL_CFLAGS   = -Wall -pedantic -std=c99 -g
 include $(BUILD_SHARED_LIBRARY)
