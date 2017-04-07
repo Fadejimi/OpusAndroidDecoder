@@ -64,8 +64,8 @@ JNIEXPORT jint JNICALL Java_com_opusandroiddecoder_nativeDecodeBytes (JNIEnv *en
     __android_log_write(ANDROID_LOG_DEBUG, "Native Code:", logMsg);
 
     jbyte* encodedData = (*env)->GetByteArrayElements(env, in, 0);
-    opus_int16 *data = (opus_int16*)calloc(outputArraySize,sizeof(opus_int16));
-    int decodedDataArraySize = opus_decode(dec, encodedData, inputArraySize, data, FRAME_SIZE, 0);
+    opus_int16 *data = (opus_int16*)calloc((size_t)outputArraySize,sizeof(opus_int16));
+    int decodedDataArraySize = opus_decode(dec, (const unsigned char *) encodedData, inputArraySize, data, FRAME_SIZE, 0);
 
     sprintf(logMsg, "Length of Decoded Data: %d", decodedDataArraySize);
     __android_log_write(ANDROID_LOG_DEBUG, "Native Code:", logMsg);
@@ -99,5 +99,3 @@ JNIEXPORT jboolean JNICALL Java_com_opusandroiddecoder_OpusDecoder_nativeRelease
 {
     return 1;
 }
-
-int main(){}
