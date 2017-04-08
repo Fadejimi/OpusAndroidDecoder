@@ -1,5 +1,7 @@
 package com.opusandroiddecoder;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -10,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Fadejimi on 07/04/2017.
@@ -19,6 +22,7 @@ public class Play {
 
     private static String TAG = Play.class.getSimpleName();
 
+    private Context context;
     // status flags
     public boolean isPlaying = false;
     public boolean isStopped = false;
@@ -40,12 +44,17 @@ public class Play {
      *
      * @param file The file to play
      */
-    public void playFile( File file)
+
+    public Play(Context context) {
+        this.context = context;
+    }
+    public void playFile(String fileName) throws IOException
     {
         this.shouldStopPlaying = false;
         this.isPlaying = true;
 
-        FileInputStream	inputStream = this.initInputStreamForFile( file );
+        AssetManager assets = context.getAssets();
+        InputStream inputStream = assets.open(fileName);
 
         AudioTrack atrack = new AudioTrack( AudioManager.STREAM_MUSIC, frequency, channelConfiguration, audioEncoding, audioRecBufferSize, AudioTrack.MODE_STREAM );
         atrack.play();
@@ -57,7 +66,7 @@ public class Play {
 
             OpusDecoder decoder = new OpusDecoder( inputStream, frequency, numberOfChannels, frameSize);
 
-            while ( !shouldStopPlaying && bytesRead < file.length() )
+            while ( !shouldStopPlaying && bytesRead < inputStream.available() )
             {
                 try
                 {
@@ -76,7 +85,7 @@ public class Play {
         else //no encoding
         {
             byte[] directBuffer = new byte[audioRecBufferSize];
-            while ( !shouldStopPlaying && bytesRead < file.length() )
+            while ( !shouldStopPlaying && bytesRead < inputStream.available() )
             {
                 try
                 {
@@ -95,26 +104,6 @@ public class Play {
         atrack.stop();
 
         this.isPlaying = false;
-    }
-
-    /**
-     * Opens a FileInputStream for a file
-     *
-     * @param file The file to open
-     * @return InputStream for file
-     */
-    private FileInputStream initInputStreamForFile( File file )
-    {
-        try
-        {
-            return new FileInputStream( file );
-        }
-        catch ( FileNotFoundException e )
-        {
-            Log.e( TAG,e.getLocalizedMessage(), e );
-
-            return null;
-        }
     }
 
     /**
