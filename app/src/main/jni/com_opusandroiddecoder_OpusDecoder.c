@@ -48,7 +48,7 @@ JNIEXPORT jboolean JNICALL Java_com_opusandroiddecoder_OpusDecoder_nativeInitDec
  * Method:    nativeDecodeBytes
  * Signature: ([B;[S)I
  */
-JNIEXPORT jint JNICALL Java_com_opusandroiddecoder_nativeDecodeBytes (JNIEnv *env, jobject obj, jbyteArray in, jshortArray out)
+JNIEXPORT jint JNICALL Java_com_opusandroiddecoder_OpusDecoder_nativeDecodeBytes (JNIEnv *env, jobject obj, jbyteArray in, jshortArray out)
 {
     __android_log_write(ANDROID_LOG_DEBUG, "Native Code:", "Opus decoding");
 
