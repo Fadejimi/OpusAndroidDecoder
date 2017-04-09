@@ -30,14 +30,13 @@ public class Play {
 
 
     // auto config
-    private boolean			isOpusEncoded			= true;
-    private int				frequency				= 8000;
-    private int				channelConfiguration	= AudioFormat.CHANNEL_CONFIGURATION_MONO;// The AudioRecord constructor only allows the deprecated configuration value.
-    private int				numberOfChannels		= 1;	// Mono
-    private int				audioEncoding			= AudioFormat.ENCODING_PCM_16BIT; // raw encoding
-    private int 			frameSize				= 20;	// The frame_size must an opus frame size for the encoder's sampling rate.
-    // For example, at 48kHz the permitted values are 120, 240, 480, 960, 1920, and 2880.
-    private final int		audioRecBufferSize				= 2 * AudioRecord.getMinBufferSize( frequency, channelConfiguration, audioEncoding ); // Buffer for audio output.
+    private boolean	isOpusEncoded = true;
+    private int	frequency = 16000;
+    private int	channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    private int	numberOfChannels = 1;	// Mono
+    private int	audioEncoding = AudioFormat.ENCODING_PCM_16BIT; // raw encoding
+    private int frameSize = 960;	// The frame_size must an opus frame size for the encoder's sampling rate.
+    private final int audioRecBufferSize = 2 * AudioRecord.getMinBufferSize( frequency, channelConfiguration, audioEncoding ); // Buffer for audio output.
 
     /**
      * Plays a given file.
